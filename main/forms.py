@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 # I did not implement a upload .txt as input because I could not figure that one out.
 
 class NewInput(forms.Form):
-	text = forms.CharField(label='Input', max_length=1000, required=False)
+	text = forms.CharField(label='Input:', max_length=1000, required=False)
 
 class RegisterForm(UserCreationForm):
 	email = forms.EmailField()

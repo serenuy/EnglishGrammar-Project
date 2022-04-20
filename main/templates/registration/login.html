@@ -1,0 +1,46 @@
+<section class="vh-100" style="">
+{% extends 'main/base.html' %}
+
+{% block title %} Login {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	{% if user.is_authenticated %}
+		<p>You are already logged in. If you want to logout, click <a href="/logout">here</a></p>
+	{% else %}
+		{{form.non_field_errors}}
+		<div class="container py-5 h-70">
+		    <div class="row d-flex justify-content-center align-items-center">
+			    <div class="col-12 col-md-8">
+				    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+					    <div class="card-body p-5 text-center">
+					    	<h3> Welcome Back! </h3>
+					    	<p></p>
+							<form action="/login/" method="POST">
+								{% csrf_token %}
+								<div class="form-outline mb-4">
+								  	{{form.username_errors}}
+									<input type="username" id="{{form.username.id_for_label}}" class="form-control" name="username" />
+									<label class="form-label" for="{{form.username.id_for_label}}">Username</label>
+								</div>
+
+								<div class="form-outline mb-4">
+									{{form.password_errors}}
+									<input type="password" id="{{form.password.id_for_label}}" class="form-control" name="password" />
+									<label class="form-label" for="{{form.password.id_for_label}}">Password</label>
+								</div>
+
+								<button type="submit" class="btn btn-success btn-block mb-4">Login</button>
+
+							  	<div class="text-center">
+							    	<p>Not Registered? <a href="/register/">Make an Account</a></p>
+							  	</div>
+						  	</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{% endif %}
+{% endblock%}

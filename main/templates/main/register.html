@@ -1,0 +1,19 @@
+<section class="vh-200" style=" height: 900px;">
+{% extends 'main/base.html' %}
+
+{% block title %} Create an Account {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h3> Start your account! </h3>
+{% if user.is_authenticated %}
+	<p>You are already registered. If you want to logout and login or register another account, click <a href="/logout">here</a> to logout first.</p>
+{% else %}
+	<form method="POST" class="form-group">
+		{% csrf_token %}
+		{{form|crispy}}
+		<button type="submit" class="btn btn-success">Join</button>
+	</form>
+{% endif %}
+</section>
+{% endblock %}

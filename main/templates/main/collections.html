@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+
+
+{% block title %} My Collections {% endblock %}
+
+{% block content %}
+	<center><h2 style="font-family:'Brush Script MT', cursive;">My Collections</h2></center>
+	<form method="POST" action="#">
+		{% csrf_token %}
+
+	<table class="table table-hover table-striped">
+		<thead class="thead" style="background-color:white;">
+			<tr>
+				<th>Inputs</th>
+				<th>Data</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody class="font-weight-light">
+			{% for i in user.collection.all %}
+			<tr>
+				<td>{{i.text}}</td>
+				<td><button type="submit" name="results" value="results" class="btn btn-light btn-sm" ><a href="{% url 'data' i.id %}" style="text-decoration:none; color:black;">Results</button></td>
+				<td><button type="submit" name="delete" value="delete" class="btn btn-danger btn-sm">
+					<a href="{% url 'delete_collection' i.id %}" style="text-decoration:none; color: white">
+						Delete</a>
+				</button></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<button type="submit" name="stats" value="stats" class="btn btn-warning"><a href="/all_stats" style="text-decoration:none; color: white">Statistics</button>
+	<button type="submit" name="create" value="create" class="btn btn-light">New Input </button>
+	</form>
+
+	<p></p>
+{% endblock %}

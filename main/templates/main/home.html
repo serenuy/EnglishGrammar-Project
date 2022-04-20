@@ -1,0 +1,80 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Grammalyzing {% endblock %}
+
+{% block content %}
+	<style type="text/css">
+		.bi-x-lg {
+			color: red;
+		}
+
+	</style>
+	<center><h2 style="font-family:'Brush Script MT', cursive; font-size:3vw;">Grammalyzing</h2></center>
+	
+	<div class="font-weight-light" style="font-size:1.2vw">
+		<center><p>Here's everything you can expect to get from the Parts-of-Speech detector.</p>
+				<p>Hover over each feature for more details.</p>
+				{% if user.is_authenticated %}
+				<a href="/create"><button class="btn btn-danger" type="submit">Get Started</button></a>
+				{% else %}
+				<a href="/register"><button class="btn btn-danger" type="submit">Get Started</button></a>
+				{% endif %}
+				<p></p>
+		</center>
+		<table class="table table-hover table-striped">
+			<thead class="thead" style="background-color:white;">
+				<tr>
+					<th>Features</th>
+					<th>Not Registered</th>
+					<th>Registered</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr><td title="You are only able to see the results of a single input">Single-Input Dashboard</td>
+					<td><i class="bi bi-check2-circle"></i></i></td>
+					<td><i class="bi bi-check2-circle"></i></i></td>
+				</tr>
+				<tr><td title="Without registering, you are able to use this feature for saving time. While registered users can use this feature to not save the input to their collection or for simple testing purposes.">Quick-Post</td>
+					<td><i class="bi bi-check2-circle"></i></td>
+					<td><i class="bi bi-check2-circle"></i></td>
+				</tr>
+				<tr><td title="Store your strings into one big collection!">Personal Collection</td>
+					<td><i class="bi bi-x-lg"></i></td>
+					<td><i class="bi bi-check2-circle"></i></td>
+				</tr>
+				<tr><td title="See one big dashboard screen of your entire collection!">Collection Dashboard</td>
+					<td><i class="bi bi-x-lg"></i></td>
+					<td><i class="bi bi-check2-circle"></i></td>
+				</tr>
+				<tr><td title="Download collection dashboard results produced by python">Download Code Output</td>
+					<td><i class="bi bi-x-lg"></i></td>
+					<td><i class="bi bi-check2-circle"></i></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<center>
+		<!-- <img class="slides" src="https://imgur.com/gYa7gge.jpg" style="width:85%;">
+		<img class="slides" src="https://imgur.com/NYNfEXO.jpg" style="width:85%;">
+		<img class="slides" src="https://imgur.com/K72zcIa.jpg" style="width:85%;"> -->
+	</center>
+
+	<script>
+		var index = 0;
+		carousel();
+
+		function carousel() {
+		var i;
+		var x = document.getElementsByClassName("slides");
+		for (i = 0; i < x.length; i++) {
+			x[i].style.display = "none";
+		}
+		index++;
+		if (index > x.length) {index = 1}
+		x[index-1].style.display = "block";
+		setTimeout(carousel, 2000);
+		}
+	</script>
+{% endblock %}

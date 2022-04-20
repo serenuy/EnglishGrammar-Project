@@ -1,0 +1,5 @@
+Dependencies: [must install before running]
++ django-crispy-forms
++ djanjo_nvd3
++ django
++ parsimonious

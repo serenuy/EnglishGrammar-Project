@@ -5,3 +5,6 @@ You must install these before you can run this application:
 + djanjo_nvd3
 + django
 + parsimonious
+
+github:
+https://github.com/sdean013199/englishgrammarproj-django22

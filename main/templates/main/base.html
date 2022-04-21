@@ -49,11 +49,11 @@
 	                	<div class="dropdown">
 	                    <a href="#" class="dropdown-toggle nav-link font-weight-light" data-toggle="dropdown" style="color:black;">Hi, {{user.first_name}} {{user.last_name}} <span class="caret"></span></a>
 	                        <ul class="dropdown-menu font-weight-light" style="position: absolute;" role="menu">
-	                            <li><a href="/collections/{{user.get_username}}" style="text-decoration:none;"><i class="bi bi-files"></i>  My Collections</a></li>
+	                            <li><a href="/collections/{{user.get_username}}" class="dropdown-item" style="text-decoration:none;"><i class="bi bi-files"></i>  My Collections</a></li>
 	                            <li class="dropdown-divider"></li>
-	                            <li><a href="/create" style="text-decoration:none;"><i class="bi bi-capslock"></i>  Create</a></li>
+	                            <li><a href="/create" class="dropdown-item" style="text-decoration:none;"><i class="bi bi-capslock"></i>  Create</a></li>
 	                            <li class="dropdown-divider"></li>
-	                            <li><a href="/password" style="text-decoration:none;"><i class="bi bi-record"></i>  Change Password</a></li>
+	                            <li><a href="/password" class="dropdown-item" style="text-decoration:none;"><i class="bi bi-record"></i>  Change Password</a></li>
 	                        </ul>
 	                    </div>
 	                </ul>

@@ -1,0 +1,30 @@
+Here is an admin account you can log into to see examples 
+of the inputs that are working correctly:
+
+Username: serena
+Password: bait1234
+
+Issues:
+#--------------------------------------
+(Things I couldn't fix):
++ If there are 2 periods in a input. It will not show it on the output table but it correctly recognize it in the node tree and the pie chart
+
+The table is the only ones having issues because I tried to match the word with the grammar found with the table, and that was not so easy. If you take that away, then it just shows the grammar it found (verb, noun,..) with no issues.
+
++ If there are 2 periods but spaces before the periods. It will display them on the table correctly.
+
++ Some words already have spaces in them in the Grammar function(views.py), therefore the space won't be picked up in the node tree/pie chart/table and will be treated as an entire word
+
++ When theres too many punctuations, the grammar doesn't know how to recognize which category they belong to, it
+will incorrectly recognize it as other things like nouns, verbs, adverbs..
+
++ The code runs great when inputs do not contain any periods or punctuations. Everything picks up exactly as it should.
+#--------------------------------------
+
+Need to install before running my project:
++ python
++ django-crispy-forms
++ djanjo_nvd3
++ django
++ parsimonious
+

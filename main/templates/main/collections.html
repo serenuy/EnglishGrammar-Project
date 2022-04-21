@@ -20,19 +20,21 @@
 			{% for i in user.collection.all %}
 			<tr>
 				<td>{{i.text}}</td>
-				<td><button type="submit" name="results" value="results" class="btn btn-light btn-sm" ><a href="{% url 'data' i.id %}" style="text-decoration:none; color:black;">Results</button></td>
-				<td><button type="submit" name="delete" value="delete" class="btn btn-danger btn-sm">
-					<a href="{% url 'delete_collection' i.id %}" style="text-decoration:none; color: white">
+				<td>
+					<a type="submit" name="results" value="results" class="btn btn-light btn-sm" href="{% url 'data' i.id %}" style="text-decoration:none; color:black;">Results</a>
+				</td>
+				<td>
+					<a type="submit" name="delete" value="delete" class="btn btn-danger btn-sm" href="{% url 'delete_collection' i.id %}" style="text-decoration:none; color: white">
 						Delete</a>
-				</button></td>
+				</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 
-	<button type="submit" name="stats" value="stats" class="btn btn-warning"><a href="/all_stats" style="text-decoration:none; color: white">Statistics</button>
-	<button type="submit" name="create" value="create" class="btn btn-light">New Input </button>
+	<a type="submit" name="stats" value="stats" class="btn btn-warning" href="/all_stats" style="text-decoration:none; color: white">Statistics</a>
+	<button type="submit" name="create" value="create" class="btn btn-light">New Input</button>
 	</form>
 
-	<p></p>
+	<br />
 {% endblock %}

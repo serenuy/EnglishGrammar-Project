@@ -10,13 +10,6 @@ from statistics import mode
 from collections import Counter
 import re
 
-#--------------------------------------
-# Known Bugs(Things I couldn't fix):
-# + If there are 2 periods in a input. It will not show it on the output table but it will still count it in the node tree/pie chart
-# + If there are 2 periods but spaces before the periods. It will display them on the table.
-# + Some words already have spaces in them in the Grammar function, therefore the space won't be picked up in the node tree/pie chart/table
-#--------------------------------------
-
 grammar = Grammar("""
 	sentence = (digits/pn/nn/vb/adv/adj/prepo/articles/not_in_library/punctuations) space* sentence*
 	digits = ~"[0-9]+"
@@ -97,12 +90,13 @@ def data(response, id):
 	for i in range(len(used_grammar)):
 		if used_grammar[i] == "space":
 			words_ref.insert(i, " ")
-			if containsNumber(str(words_ref[i-1])) and i != len(words_ref):
-				if "," in words_ref:
-					words_ref.pop(i)
-			if words_ref[len(words_ref)-1] == "!" or "?" or ".":
-				if i+1 == len(words_ref):
-					words_ref.pop(i)
+			if containsNumber(text) == True:
+				if containsNumber(str(words_ref[i-1])) and i != len(words_ref):
+					if "," in words_ref:
+						words_ref.pop(i)
+				if words_ref[len(words_ref)-1] == "!" or "?" or ".":
+					if i+1 == len(words_ref):
+						words_ref.pop(i)
 
 	# if there are periods, count how many to justify for sentences amount
 	for i in range(len(words_ref)):
@@ -257,8 +251,9 @@ def quickpost(response):
 			try:
 				grammar.parse(t.text.upper().lower())
 				return data(response, t.id)
-			except:
+			except Exception as e:
 				messages.error(response, "This input contains strings not found in our dictionary, please try something different.")
+				print(e)
 				t.delete()
 	else:
 		form = NewInput()

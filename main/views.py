@@ -35,12 +35,50 @@ not_in_library = ~r"[-\w]+"
 grammar_exist = ["sentence","digits","punctuations","space","pn"
 				,"nn","vb","adj","adv","prepo","articles","not_in_library"]
 
+# This is a cleaner version of the data function except it wont tell you what was found automatically.
+def accurate_data(response, id):
+	ls = Collection.objects.get(id=id)
+	text = ls.text
+	used_grammar = []
+	counts = []
+	count = 0
+
+	try:
+		grammar.parse(text.upper().lower())
+	except:
+		messages.error(response, "Something went wrong with your input. Please try something different.")
+		redirect("main/home.html")
+
+	text_parsed = grammar.parse(text.upper().lower())
+	output = text_parsed
+	text_parsed = str(text_parsed)
+
+	find_grammar = re.findall('"([^"]*)"', text_parsed)
+
+	for i in range(len(find_grammar)):
+		if find_grammar[i] in grammar_exist:
+			if find_grammar[i] == grammar_exist[0] and find_grammar[i] in used_grammar:
+				continue
+			else:
+				used_grammar.append(find_grammar[i])
+
+	for i in range(len(grammar_exist)):
+			while count != 1:
+				if count == 0:
+					break
+				used_grammar.append("sentence")
+				count-=1
+			counts.append(used_grammar.count(grammar_exist[i]))
+
+	return render(response, "main/accurate_data.html", {"used_grammar":used_grammar, "text":text, "counts":counts, "output":output})
+
 def containsNumber(value):
 	if True in [char.isdigit() for char in value]:
 		return True
 	return False
 
-# This is the longest code ever, I apologize for not having it more simplified but I didn't know how-to.
+# This is the longest code ever, I apologize for not having it more simplified but I didn't know how to.
+# This one doesn't gaurentee accuracy
 def data(response, id):
 	ls = Collection.objects.get(id=id) # get one input from entire collection chosen
 	text = ls.text # gets entire input
@@ -181,7 +219,7 @@ def data(response, id):
 
 	# Append "sentence" to grammar found if there is more than one period
 	for i in range(len(grammar_exist)):
-		while s != 1:
+		while count != 1:
 			if count == 0:
 				break
 			used_grammar.append("sentence")
@@ -236,7 +274,7 @@ def all_stats(response):
 
 	most_occur = [word for word, word_count in Counter(splits).most_common(3)]
 
-	return render(response, "main/alldata.html", {"text_parsed":used_grammar, "text":text, "counts":counts, "output":output, "most_used":most_occur})
+	return render(response, "main/all_data.html", {"text":text, "counts":counts, "output":output, "most_used":most_occur})
 
 def home(response):
 	return render(response, "main/home.html", {})
@@ -250,10 +288,12 @@ def quickpost(response):
 				t.save()
 			try:
 				grammar.parse(t.text.upper().lower())
-				return data(response, t.id)
+				if response.POST.get("save"):
+					return data(response, t.id)
+				else:
+					return accurate_data(response, t.id)
 			except Exception as e:
 				messages.error(response, "This input contains strings not found in our dictionary, please try something different.")
-				print(e)
 				t.delete()
 	else:
 		form = NewInput()
@@ -291,7 +331,10 @@ def create(response):
 				response.user.collection.add(t)
 			try:
 				grammar.parse(t.text.upper().lower())
-				return redirect("/data/%i" % t.id)
+				if response.POST.get("save"):
+					return redirect("/data/%i" % t.id)
+				else:
+					return redirect("/accurate_data/%i" % t.id)
 			except:
 				t.delete()
 				messages.error(response, "This input contains strings not found in our dictionary, please try something different.")

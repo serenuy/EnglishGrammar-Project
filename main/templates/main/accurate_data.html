@@ -1,0 +1,139 @@
+{% extends 'main/base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+	{% if user.is_authenticated %}
+	<a href="/collections/{{user.get_username}}/" style="margin-left:-200px; text-decoration: none; padding:8px 16px; border-radius: 50%; background-color: #f1f1f1; color: black;" class="previous round">&#8249;</a>
+	{% else %}
+	<a href="/quick-post/" style="margin-left:-200px; text-decoration: none; padding:8px 16px; border-radius: 50%; background-color: #f1f1f1; color: black;" class="previous round">&#8249;</a>
+	{% endif %}
+
+	<style>
+		.column {
+			float: left;
+			width: 50%;
+		}
+		pre code {
+			background-color: #eee;
+			border: 1px solid #999;
+			display: block;
+			padding: 10px;
+			margin: 5px 10px;
+		}
+		canvas {
+			margin: auto;
+			margin-left: 120px;
+			width: 400px;
+		}
+		.tableFixHead {
+			overflow-y: auto;
+			height: 500px;
+		}
+		.tableFixHead thead th {
+			position: sticky;
+			top: 0;
+		}
+		th {
+			background: #ffff;
+		}
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+	</style>
+
+	<center><h2 style="font-family:'Brush Script MT', cursive;">Dashboard:</h2></center>
+
+	<h3 class="font-weight-light" style="margin-left:0px;display: inline-block;">Results:</h3>
+	<h3 class="font-weight-light" style="margin-left: 500px;display: inline-block;">Pie Chart:</h3>
+	<p></p>
+	<div class="row" style="margin-left:0px;">
+		<div class="column">
+			<div class="tableFixHead">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Your Input: "{{text}}"</th>
+						</tr>
+					</thead>
+
+					<tbody class="font-weight-light">
+					{% for i in used_grammar %}
+					<tr> 
+						<td>{{i}}</td>
+					</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="chart-container column">
+	  		<canvas id="myChart"></canvas>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+		<script>
+		  const labels = [
+		  	'Sentence(s)',
+		    'Digits',
+		    'Punctuations',
+		    'Spaces',
+		    'Pronouns (pn)',
+		    'Nouns (nn)',
+		    'Verbs (vb)',
+		    'Adjectives (adj)',
+		    'Adverbs (adv)',
+		    'Prepositions (prepo)',
+		    'Articles',
+		    'Unknown'
+		  ];
+
+		  const data = {
+		    labels: labels,
+		    datasets: [{
+		      label: 'Grammar Data',
+		      borderColor: '#EFEFEF',
+		      hoverOffset: 10,
+		      backgroundColor: ['rgb(255, 99, 132)',
+		      'rgb(54, 162, 235)',
+		      'rgb(255, 205, 86)',
+		      'rgb(255, 300, 50)',
+		      'rgb(255, 23, 132)',
+		      'rgb(110, 99, 132)',
+		      'rgb(50, 32, 132)',
+		      'rgb(45, 162, 132)',
+		      'rgb(14, 80, 112)',
+		      'rgb(50, 99, 50)',
+		      'rgb(10, 10, 33)',
+		      'rgb(24, 62, 250)'],
+		      data: {{counts}},
+		    }]
+		  };
+
+		  const config = {
+		    type: 'pie',
+		    data: data,
+		    options: {}
+		  };
+		</script>
+
+		<script>
+		  const myChart = new Chart(
+		    document.getElementById('myChart'),
+		    config
+		  );
+		</script>
+	</div>
+
+	<h3 class="font-weight-light">Code Output:</h3>
+
+	<pre style="white-space: pre-wrap;">
+		<code>
+			{{output|linebreaks}}
+		</code>
+	</pre>
+	
+{% endblock %}

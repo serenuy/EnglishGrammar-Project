@@ -13,6 +13,7 @@
 			<tr>
 				<th>Inputs</th>
 				<th>Data</th>
+				<th></th>
 				<th>Action</th>
 			</tr>
 		</thead>
@@ -20,6 +21,9 @@
 			{% for i in user.collection.all %}
 			<tr>
 				<td>{{i.text}}</td>
+				<td>
+					<a type="submit" name="results" value="results" class="btn btn-light btn-sm" href="{% url 'accurate_data' i.id %}" style="text-decoration:none; color:black;">Accurate Results</a>
+				</td>
 				<td>
 					<a type="submit" name="results" value="results" class="btn btn-light btn-sm" href="{% url 'data' i.id %}" style="text-decoration:none; color:black;">Results</a>
 				</td>

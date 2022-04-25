@@ -70,7 +70,7 @@ def accurate_data(response, id):
 				count-=1
 			counts.append(used_grammar.count(grammar_exist[i]))
 
-	return render(response, "main/accurate_data.html", {"used_grammar":used_grammar, "text":text, "counts":counts, "output":output})
+	return render(response, "main/accurate_data.html", {"ls":ls,"used_grammar":used_grammar, "text":text, "counts":counts, "output":output})
 
 def containsNumber(value):
 	if True in [char.isdigit() for char in value]:
@@ -228,7 +228,7 @@ def data(response, id):
 
 	text_parsed = zip(used_grammar, words_ref)
 
-	return render(response, "main/data.html", {"text_parsed":text_parsed, "text":text, "counts":counts, "output":output})
+	return render(response, "main/data.html", {"ls":ls,"text_parsed":text_parsed, "text":text, "counts":counts, "output":output})
 
 def all_stats(response):
 	if not response.user.is_authenticated:
@@ -288,10 +288,7 @@ def quickpost(response):
 				t.save()
 			try:
 				grammar.parse(t.text.upper().lower())
-				if response.POST.get("save"):
-					return data(response, t.id)
-				else:
-					return accurate_data(response, t.id)
+				return data(response, t.id)
 			except Exception as e:
 				messages.error(response, "This input contains strings not found in our dictionary, please try something different.")
 				t.delete()
@@ -329,12 +326,10 @@ def create(response):
 				t = Collection(text=n)
 				t.save()
 				response.user.collection.add(t)
+
 			try:
 				grammar.parse(t.text.upper().lower())
-				if response.POST.get("save"):
-					return redirect("/data/%i" % t.id)
-				else:
-					return redirect("/accurate_data/%i" % t.id)
+				return redirect("/accurate_data/%i" % t.id)
 			except:
 				t.delete()
 				messages.error(response, "This input contains strings not found in our dictionary, please try something different.")

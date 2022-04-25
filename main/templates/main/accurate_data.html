@@ -4,10 +4,14 @@
 
 {% block content %}
 	{% if user.is_authenticated %}
-	<a href="/collections/{{user.get_username}}/" style="margin-left:-200px; text-decoration: none; padding:8px 16px; border-radius: 50%; background-color: #f1f1f1; color: black;" class="previous round">&#8249;</a>
+	<a href="/collections/{{user.get_username}}/" style="margin-left:0px; text-decoration: none; padding:8px 16px; border-radius: 50%; background-color: #f1f1f1; color: black;" class="previous round">&#8249;</a>
+	<br/>
 	{% else %}
-	<a href="/quick-post/" style="margin-left:-200px; text-decoration: none; padding:8px 16px; border-radius: 50%; background-color: #f1f1f1; color: black;" class="previous round">&#8249;</a>
+	<a href="/quick-post/" style="margin-left:0px; text-decoration: none; padding:8px 16px; border-radius: 50%; background-color: #f1f1f1; color: black;" class="previous round">&#8249;</a>
+	<br/>
 	{% endif %}
+
+	<br/><a href="/data/{{ls.id}}" type="submit" class="btn btn-primary">Non-Accurate results</a>
 
 	<style>
 		.column {

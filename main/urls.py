@@ -18,7 +18,7 @@ urlpatterns = [
 	path("collections/<int:id>", views.delete_collection, name="delete_collection"),
 
 	path("data/<int:id>", views.data, name="data"),
-	path("all_stats/", views.all_stats, name="data2"),
+	path("combined_data/", views.all_stats, name="data2"),
 	path("accurate_data/<int:id>", views.accurate_data, name="accurate_data")
 ]
 

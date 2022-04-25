@@ -247,6 +247,12 @@ def all_stats(response):
 	text = ' '.join(map(str, text))
 	splits = text.split()
 
+	try:
+		grammar.parse(text.upper().lower())
+	except:
+		messages.error(response, "One of your inputs is not working. Please check your most recent input.")
+		redirect("main/collections.html")
+
 	text_parsed = grammar.parse(text.upper().lower())
 	output = text_parsed
 	text_parsed = str(text_parsed)
